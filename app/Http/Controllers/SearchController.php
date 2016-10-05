@@ -35,8 +35,8 @@ class SearchController extends Controller
         return $this->index(
             $this->$f(
                 $request->input('searchId'),
-                $request->input('initialDate'),
-                $request->input('finalDate')
+                new DateTime($request->input('initialDate')),
+                new DateTime($request->input('finalDate'))
             ),
             [
                 'Función' => $f,
@@ -59,8 +59,8 @@ class SearchController extends Controller
     {
         $search = Search::find($searchId);
         $tweets = $search->tweets()
-            ->where('postedTime', '>=', new DateTime($initialDate))
-            ->where('postedTime', '<=', new DateTime($finalDate))
+            ->where('postedTime', '>=', $initialDate)
+            ->where('postedTime', '<=', $finalDate)
             ->get();
 
         $result['No. de Tweets'] = count($tweets);
@@ -82,8 +82,8 @@ class SearchController extends Controller
     {
         $search = Search::find($searchId);
         $tweets = $search->tweets()
-            ->where('postedTime', '>=', new DateTime($initialDate))
-            ->where('postedTime', '<=', new DateTime($finalDate))
+            ->where('postedTime', '>=', $initialDate)
+            ->where('postedTime', '<=', $finalDate)
             ->get();
 
         return ['Top 10 Hashtag' => array_slice($this->topHashtags($tweets), 0 , 10)];
@@ -100,8 +100,8 @@ class SearchController extends Controller
     {
         $search = Search::find($searchId);
         $tweets = $search->tweets()
-            ->where('postedTime', '>=', new DateTime($initialDate))
-            ->where('postedTime', '<=', new DateTime($finalDate))
+            ->where('postedTime', '>=', $initialDate)
+            ->where('postedTime', '<=', $finalDate)
             ->get();
 
         $nTweets = 0;
