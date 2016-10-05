@@ -21,8 +21,8 @@ Entra al directorio e instala las dependecias de Composer
 
 Copia el archivo de configuración *.env.example* y renombralo a *.env* y genera la clave de la aplicación
 
-    $  cp .env.example .env
-    $ php artisan key:generate
+    $ cp .env.example .env
+    $ composer update && php artisan key:generate
 
 Configura la base de datos en el archivo .env usando el driver para MongoDB
 
@@ -56,3 +56,5 @@ Importa la base de datos a MongoDB localizada en el directorio *_DB*
 Puedes ejecutar la aplicación rápidamente usando el servidor embebido de PHP desplegándose en http://localhost:8000/
 
     $ php artisan serve
+
+Esta aplicación fue realizada con [Laravel](https://laravel.com/) y [Moloquent](https://moloquent.github.io/master/)
