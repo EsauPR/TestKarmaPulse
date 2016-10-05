@@ -118,8 +118,8 @@ class SearchController extends Controller
         }
 
         return [
-            'Tweets' => ($nTweets / $total).'%',
-            'Retweets' => ($nRetweets / $total)."%",
+            'Tweets' => ($total !=0 )?($nTweets / $total).'%':'0.0%',
+            'Retweets' => ($total !=0 )?($nRetweets / $total)."%":'0.0%',
         ];
     }
 

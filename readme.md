@@ -1,27 +1,58 @@
-# Laravel PHP Framework
+# Test - KarmaPulse
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+## Requerimientos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+- Composer
+- PHP >= 5.5.9
+- MongoDB > 3.2.x
+- MongoDB PHP Extension
+- Mbstring PHP Extension
+- Tokenizer PHP Extension
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Configuración
 
-## Official Documentation
+Descarga el zip o clona el repositorio
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+    $ git clone https://github.com/EsauPR/TestKarmaPulse.git
 
-## Contributing
+Entra al directorio e instala las dependecias de Composer
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+    $ cd TestKarmaPulse && composer install
 
-## Security Vulnerabilities
+Copia el archivo de configuración *.env.example* y renombralo a *.env* y genera la clave de la aplicación
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+    $  cp .env.example .env
+    $ php artisan key:generate
 
-## License
+Configura la base de datos en el archivo .env usando el driver para MongoDB
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+    DB_CONNECTION=mongodb
+    DB_HOST=127.0.0.1
+    DB_PORT=27017
+    DB_DATABASE=KMetrics
+    DB_USERNAME=username
+    DB_PASSWORD=secret
+
+**Si no tienes asignado un usuario y contraseña para MongoDB** omite las parámetros *DB_USERNAME* y *DB_PASSWORD*, de lo contrario, asigna tus credenciales y descomenta las claves **username** y **password** en el array de conexiones del configuración de la base de datos *config/database.php*
+
+    'mongodb' => [
+        'driver'   => 'mongodb',
+        'host'     => env('DB_HOST', 'localhost'),
+        'port'     => env('DB_PORT', 27017),
+        'database' => env('DB_DATABASE'),
+        //'username' => env('DB_USERNAME'),
+        //'password' => env('DB_PASSWORD'),
+        'use_mongo_id' => false,
+        'options' => [
+            'db' => 'admin', // Sets the authentication database required by mongo 3
+            //['replicaSet' => 'replicaSetName'], // Connect to multiple servers or replica sets
+        ]
+    ],
+
+Importa la base de datos a MongoDB localizada en el directorio *_DB*
+
+    $ mongorestore --db KMetrics _DB/KMetrics
+
+Puedes ejecutar la aplicación rápidamente usando el servidor embebido de PHP desplegándose en http://localhost:8000/
+
+    $ php artisan serve

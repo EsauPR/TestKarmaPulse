@@ -12,7 +12,4 @@
 */
 
 Route::get('/', 'SearchController@index');
-
-Route::get('/test', 'Test@index');
-
 Route::get('/search/{f}', 'SearchController@preprocess');
